@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['query'])) {
     $query = urlencode($_GET['query']);
-    $apiKey = 'V94JUY-86QKJV8P5Y'; 
+    $apiKey = ''; 
     $url = "https://api.wolframalpha.com/v1/result?appid=$apiKey&i=$query";
 
     $response = @file_get_contents($url);
