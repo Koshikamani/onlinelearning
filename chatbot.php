@@ -3,7 +3,7 @@
 // Backend logic to handle OpenAI API calls
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
-    $apiKey ="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"; // Replace with your OpenAI API key
+    $apiKey =""; // Replace with your OpenAI API key
 
     // Read and decode the incoming JSON data
     $requestData = json_decode(file_get_contents('php://input'), true);
