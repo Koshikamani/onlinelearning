@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wolfram Alpha Query</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600&display=swap');
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f3f4f6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #a724f7;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .form-container {
+            padding: 60px;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-container input[type="text"] {
+            padding: 15px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .form-container input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .form-container button {
+            padding: 15px;
+            font-size: 1rem;
+            background: #ff9200;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .form-container button:hover {
+            background: #0056b3;
+        }
+
+        .result-container {
+            padding: 20px;
+            background: #f9f9f9;
+            border-top: 1px solid #ddd;
+        }
+
+        .result-container h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .result-container p {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Wolfram Alpha Computational Bot</h1>
+    </div>
+
+    <div class="form-container">
+        <form id="queryForm">
+            <input type="text" name="query" id="query" placeholder="Enter your query (e.g., Solve x^2 = 4)" required>
+            <button type="submit"><i class="fas fa-search"></i> Submit</button>
+        </form>
+    </div>
+
+    <div class="result-container" id="result-container" style="display: none;">
+        <h3>Result:</h3>
+        <p id="result-text"></p>
+    </div>
+</div>
+
+<script>
+    const WOLFRAM_API_URL = 'https://api.wolframalpha.com/v1/result';
+    const WOLFRAM_APP_ID = 'V94JUY-86QKJV8P5Y';
+
+    document.getElementById('queryForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const query = document.getElementById('query').value.trim();
+        if (!query) return;
+
+        const encodedQuery = encodeURIComponent(query);
+        const url = `${WOLFRAM_API_URL}?appid=${WOLFRAM_APP_ID}&i=${encodedQuery}`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+            const result = await response.text();
+            document.getElementById('result-container').style.display = 'block';
+            document.getElementById('result-text').textContent = result;
+        } catch (error) {
+            document.getElementById('result-container').style.display = 'block';
+            document.getElementById('result-text').textContent = 'Error fetching data from Wolfram Alpha.';
+            console.error(error);
+        }
+    });
+</script>
+
+</body>
+</html>
+
