@@ -114,7 +114,7 @@
 
 <script>
     const WOLFRAM_API_URL = 'https://api.wolframalpha.com/v1/result';
-    const WOLFRAM_APP_ID = 'V94JUY-86QKJV8P5Y';
+    const WOLFRAM_APP_ID = '';
 
     document.getElementById('queryForm').addEventListener('submit', async (event) => {
         event.preventDefault();
